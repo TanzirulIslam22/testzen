@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "896657427544",
+    "project_id": "testzen-94e2b",
+    "storage_bucket": "testzen-94e2b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:896657427544:android:17594ba15e001247e58e2d",
+        "android_client_info": {
+          "package_name": "com.example.testzen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_clWqJsE8KL23yQPZKoQHe1hfoKaFGY4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

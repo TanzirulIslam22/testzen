@@ -1,178 +1,235 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:testzen/models/exam.dart';
-import 'package:testzen/models/question.dart'; // ✅ ADD THIS LINE
-import 'package:testzen/services/database_service.dart';
-import 'package:testzen/widgets/timer_widget.dart';
 import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:testzen/screens/student/results_screen.dart';
-
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../models/question_model.dart';
+import '../../models/result_model.dart';
+import '../../services/database_service.dart';
+import '../../services/auth_service.dart';
 
 class ExamScreen extends StatefulWidget {
-  final Exam exam;
-
-  const ExamScreen({super.key, required this.exam});
+  final String examId;
+  const ExamScreen({Key? key, required this.examId}) : super(key: key);
 
   @override
-  _ExamScreenState createState() => _ExamScreenState();
+  State<ExamScreen> createState() => _ExamScreenState();
 }
 
 class _ExamScreenState extends State<ExamScreen> {
-  late DateTime _startTime;
-  late DateTime _endTime;
-  late int _remainingSeconds;
-  late Timer _timer;
-  final Map<int, int> _answers = {};
-  int _currentQuestionIndex = 0;
-
-  // Getter to safely access questions
-  List<Question> get _questions => widget.exam.questions ?? [];
-
+  List<QuestionModel> _questions = [];
+  Map<int, int> _answers = {}; // question index -> selected option
+  bool _loading = true;
+  Timer? _timer;
+  int _secondsLeft = 0;
+  String _examTitle = '';
+  int _durationMinutes = 0;
 
   @override
   void initState() {
     super.initState();
-    _startTime = DateTime.now();
-    _endTime = _startTime.add(Duration(minutes: widget.exam.durationMinutes));
-    _remainingSeconds = _endTime.difference(_startTime).inSeconds;
+    _loadExamAndQuestions();
+  }
 
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+  Future<void> _loadExamAndQuestions() async {
+    try {
+      // Load exam details
+      final examDoc = await FirebaseFirestore.instance.collection('exams').doc(widget.examId).get();
+      final examData = examDoc.data();
+      if (examData == null) {
+        // handle no exam found
+        Navigator.pop(context);
+        return;
+      }
+
+      _examTitle = examData['title'] ?? 'Exam';
+      _durationMinutes = examData['durationMinutes'] ?? 0;
+      _secondsLeft = _durationMinutes * 60;
+
+      // Load questions
+      final questionsSnapshot = await FirebaseFirestore.instance
+          .collection('exams')
+          .doc(widget.examId)
+          .collection('questions')
+          .get();
+
+      final questions = questionsSnapshot.docs
+          .map((doc) => QuestionModel.fromMap(doc.data()))
+          .toList();
+
       setState(() {
-        _remainingSeconds = _endTime.difference(DateTime.now()).inSeconds;
-        if (_remainingSeconds <= 0) {
-          _timer.cancel();
-          _submitExam();
-        }
+        _questions = questions;
+        _loading = false;
       });
+
+      _startTimer();
+    } catch (e) {
+      print('Error loading exam/questions: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to load exam. Please try again.')),
+        );
+      }
+      Navigator.pop(context);
+    }
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_secondsLeft <= 0) {
+        timer.cancel();
+        _submitAnswers(autoSubmitted: true);
+      } else {
+        setState(() {
+          _secondsLeft--;
+        });
+      }
     });
   }
 
-  void _submitExam() async {
-    // Calculate score
-    int score = 0;
-    for (var entry in _answers.entries) {
-      if (entry.value == _questions[entry.key].correctAnswerIndex) {
-        score++;
+  String get _timeFormatted {
+    final minutes = (_secondsLeft ~/ 60).toString().padLeft(2, '0');
+    final seconds = (_secondsLeft % 60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
+  }
+
+  void _submitAnswers({bool autoSubmitted = false}) async {
+    _timer?.cancel();
+
+    int correct = 0;
+    for (int i = 0; i < _questions.length; i++) {
+      if (_answers[i] == _questions[i].correctOption) {
+        correct++;
       }
     }
 
-    // Submit to database
-    await Provider.of<DatabaseService>(context, listen: false).submitExamAnswers(
-      widget.exam.id,
-      FirebaseAuth.instance.currentUser!.uid,
-      _answers,
-      score,
+    final userId = AuthService.currentUser?.uid;
+    if (userId == null) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User not logged in.')),
+      );
+      return;
+    }
+
+    final result = ResultModel(
+      examId: widget.examId,
+      examTitle: _examTitle,
+      totalQuestions: _questions.length,
+      correctAnswers: correct,
+      takenAt: DateTime.now(),
     );
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ResultsScreen(
-          exam: widget.exam,
-          score: score,
-          totalQuestions: _questions.length,
+    print('Submitting exam result for user $userId with score $correct/${_questions.length}');
+    try {
+      await DatabaseService.saveExamResult(userId: userId, result: result);
+      print('Result saved successfully');
+    } catch (e) {
+      print('Error saving result: $e');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to save result: $e')),
+      );
+    }
+
+    if (!autoSubmitted) {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: const Text('Exam Submitted'),
+          content: Text('You got $correct out of ${_questions.length} correct.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // close dialog
+                Navigator.pop(context); // go back
+              },
+              child: const Text('OK'),
+            )
+          ],
         ),
-      ),
-    );
+      );
+    } else {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: const Text('Time Up'),
+          content: Text('Time is up! You got $correct out of ${_questions.length} correct.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // close dialog
+                Navigator.pop(context); // go back
+              },
+              child: const Text('OK'),
+            )
+          ],
+        ),
+      );
+    }
   }
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Check if questions exist
-    if (_questions.isEmpty) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.exam.title),
-        ),
-        body: Center(
-          child: Text("No questions available for this exam."),
-        ),
+    if (_loading) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
       );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.exam.title),
+        title: Text(_examTitle),
         actions: [
-          TimerWidget(remainingSeconds: _remainingSeconds),
+          Center(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: Text('Time Left: $_timeFormatted', style: const TextStyle(fontSize: 18)),
+              )),
         ],
       ),
-      body: Column(
-        children: [
-          LinearProgressIndicator(
-            value: (_currentQuestionIndex + 1) / _questions.length,
-          ),
-          Expanded(
+      body: ListView.builder(
+        itemCount: _questions.length,
+        itemBuilder: (context, index) {
+          final q = _questions[index];
+          return Card(
+            margin: const EdgeInsets.all(12),
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(12),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    _questions[_currentQuestionIndex].text,
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(height: 20),
-                  ..._questions[_currentQuestionIndex]
-                      .options
-                      .asMap()
-                      .entries
-                      .map((entry) => RadioListTile<int>(
-                    title: Text(entry.value),
-                    value: entry.key,
-                    groupValue: _answers[_currentQuestionIndex],
-                    onChanged: (int? value) {
-                      setState(() {
-                        _answers[_currentQuestionIndex] = value!;
-                      });
-                    },
-                  ))
-                      .toList(),
-                  Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (_currentQuestionIndex > 0)
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              _currentQuestionIndex--;
-                            });
-                          },
-                          child: Text('Previous'),
-                        ),
-                      ElevatedButton(
-                        onPressed: _answers.containsKey(_currentQuestionIndex)
-                            ? () {
-                          if (_currentQuestionIndex <
-                              _questions.length - 1) {
-                            setState(() {
-                              _currentQuestionIndex++;
-                            });
-                          } else {
-                            _submitExam();
-                          }
-                        }
-                            : null,
-                        child: Text(_currentQuestionIndex ==
-                            _questions.length - 1
-                            ? 'Submit'
-                            : 'Next'),
-                      ),
-                    ],
-                  ),
+                  Text('Q${index + 1}: ${q.questionText}'),
+                  const SizedBox(height: 8),
+                  ...List.generate(
+                    4,
+                        (i) => RadioListTile<int>(
+                      title: Text(q.options[i]),
+                      value: i + 1,
+                      groupValue: _answers[index],
+                      onChanged: (val) {
+                        setState(() {
+                          _answers[index] = val!;
+                        });
+                      },
+                    ),
+                  )
                 ],
               ),
             ),
-          ),
-        ],
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _submitAnswers(),
+        label: const Text('Submit'),
+        icon: const Icon(Icons.check),
       ),
     );
   }

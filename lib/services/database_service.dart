@@ -1,52 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/exam.dart';
-import '../models/question.dart';
+import '../models/result_model.dart';
 
 class DatabaseService {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Exam methods
-  Future<void> createExam(Exam exam) async {
-    await _firestore.collection('exams').doc(exam.id).set(exam.toMap());
+  // Save student's exam result
+  static Future<void> saveExamResult({
+    required String userId,
+    required ResultModel result,
+  }) async {
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('results')
+        .add(result.toMap());
   }
 
-  Future<void> addQuestions(String examId, List<Question> questions) async {
-    await _firestore.collection('exams').doc(examId).update({
-      'questions': questions.map((q) => q.toMap()).toList(),
-    });
-  }
-
-  Future<List<Exam>> getUpcomingExams() async {
-    QuerySnapshot snapshot = await _firestore
-        .collection('exams')
-        .where('endTime', isGreaterThan: DateTime.now())
-        .get();
-    return snapshot.docs.map((doc) => Exam.fromMap(doc.data() as Map<String, dynamic>)).toList();
-  }
-
-  // Student registration for exam
-  Future<void> registerForExam(String examId, String userId) async {
-    await _firestore.collection('examRegistrations').doc('$examId-$userId').set({
-      'examId': examId,
-      'userId': userId,
-      'registeredAt': DateTime.now(),
-      'status': 'registered',
-    });
-  }
-
-  // Submit exam answers
-  Future<void> submitExamAnswers(
-      String examId,
-      String userId,
-      Map<int, int> answers,
-      int score,
-      ) async {
-    await _firestore.collection('examResults').doc('$examId-$userId').set({
-      'examId': examId,
-      'userId': userId,
-      'answers': answers,
-      'score': score,
-      'submittedAt': DateTime.now(),
-    });
+  // Fetch all results for a student
+  static Stream<List<ResultModel>> getResultsForUser(String userId) {
+    return _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('results')
+        .orderBy('takenAt', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
+        .map((doc) => ResultModel.fromMap(doc.data()))
+        .toList());
   }
 }

@@ -28,6 +28,9 @@ class AvailableExamsScreen extends StatelessWidget {
               final exam = exams[index];
               final data = exam.data() as Map<String, dynamic>;
 
+              final DateTime? examStartTime = (data['examDateTime'] as Timestamp?)?.toDate();
+              final bool isStarted = examStartTime != null && DateTime.now().isAfter(examStartTime);
+
               return Card(
                 margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 child: ListTile(
@@ -38,10 +41,11 @@ class AvailableExamsScreen extends StatelessWidget {
                       Text(data['description'] ?? ''),
                       const SizedBox(height: 4),
                       Text('Duration: ${data['durationMinutes']} minutes'),
-                      Text('Scheduled: ${DateTime.tryParse(data['examDateTime']?.toDate().toString() ?? '')}'),
+                      Text('Scheduled: ${examStartTime?.toLocal()}'),
                     ],
                   ),
-                  trailing: ElevatedButton(
+                  trailing: isStarted
+                      ? ElevatedButton(
                     child: const Text('Start'),
                     onPressed: () {
                       Navigator.push(
@@ -51,7 +55,8 @@ class AvailableExamsScreen extends StatelessWidget {
                         ),
                       );
                     },
-                  ),
+                  )
+                      : const Text("Not Started Yet", style: TextStyle(color: Colors.grey)),
                 ),
               );
             },

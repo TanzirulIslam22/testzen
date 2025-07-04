@@ -32,10 +32,25 @@ class _ExamScreenState extends State<ExamScreen> {
   Future<void> _loadExamAndQuestions() async {
     try {
       // Load exam details
-      final examDoc = await FirebaseFirestore.instance.collection('exams').doc(widget.examId).get();
+      final examDoc = await FirebaseFirestore.instance
+          .collection('exams')
+          .doc(widget.examId)
+          .get();
       final examData = examDoc.data();
       if (examData == null) {
-        // handle no exam found
+        Navigator.pop(context);
+        return;
+      }
+
+      final examDateTime =
+      (examData['examDateTime'] as Timestamp?)?.toDate();
+      if (examDateTime == null || DateTime.now().isBefore(examDateTime)) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+                content: Text('This exam is not yet available.')),
+          );
+        }
         Navigator.pop(context);
         return;
       }
@@ -65,7 +80,7 @@ class _ExamScreenState extends State<ExamScreen> {
       print('Error loading exam/questions: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to load exam. Please try again.')),
+          const SnackBar(content: Text('Failed to load exam. Please try again.')),
         );
       }
       Navigator.pop(context);
@@ -118,55 +133,32 @@ class _ExamScreenState extends State<ExamScreen> {
       takenAt: DateTime.now(),
     );
 
-    print('Submitting exam result for user $userId with score $correct/${_questions.length}');
     try {
       await DatabaseService.saveExamResult(userId: userId, result: result);
-      print('Result saved successfully');
     } catch (e) {
-      print('Error saving result: $e');
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to save result: $e')),
       );
     }
 
-    if (!autoSubmitted) {
-      if (!mounted) return;
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: const Text('Exam Submitted'),
-          content: Text('You got $correct out of ${_questions.length} correct.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // close dialog
-                Navigator.pop(context); // go back
-              },
-              child: const Text('OK'),
-            )
-          ],
-        ),
-      );
-    } else {
-      if (!mounted) return;
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: const Text('Time Up'),
-          content: Text('Time is up! You got $correct out of ${_questions.length} correct.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // close dialog
-                Navigator.pop(context); // go back
-              },
-              child: const Text('OK'),
-            )
-          ],
-        ),
-      );
-    }
+    if (!mounted) return;
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(autoSubmitted ? 'Time Up' : 'Exam Submitted'),
+        content: Text('You got $correct out of ${_questions.length} correct.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // close dialog
+              Navigator.pop(context); // go back
+            },
+            child: const Text('OK'),
+          )
+        ],
+      ),
+    );
   }
 
   @override
@@ -188,10 +180,14 @@ class _ExamScreenState extends State<ExamScreen> {
         title: Text(_examTitle),
         actions: [
           Center(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 12),
-                child: Text('Time Left: $_timeFormatted', style: const TextStyle(fontSize: 18)),
-              )),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: Text(
+                'Time Left: $_timeFormatted',
+                style: const TextStyle(fontSize: 18),
+              ),
+            ),
+          ),
         ],
       ),
       body: ListView.builder(

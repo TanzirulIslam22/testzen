@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+ //for using Timestamp from firestore & converting to DateTime
 
 class ResultModel {
   final String examId;
@@ -7,6 +8,7 @@ class ResultModel {
   final int correctAnswers;
   final DateTime takenAt;
 
+  //constructor
   ResultModel({
     required this.examId,
     required this.examTitle,
@@ -15,6 +17,7 @@ class ResultModel {
     required this.takenAt,
   });
 
+  //Factory Constructor from Firestore
   factory ResultModel.fromMap(Map<String, dynamic> map) {
     return ResultModel(
       examId: map['examId'] ?? '',
@@ -25,6 +28,7 @@ class ResultModel {
     );
   }
 
+  //Convert to Firestore (toMap) | reverse of fromMap()
   Map<String, dynamic> toMap() {
     return {
       'examId': examId,

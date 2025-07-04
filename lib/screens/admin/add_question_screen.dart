@@ -1,7 +1,4 @@
-// File: lib/screens/admin/add_question_screen.dart
-
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../models/question_model.dart';
 import '../../services/exam_service.dart';
 

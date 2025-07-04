@@ -4,7 +4,6 @@ class RoleSelectionScreen extends StatelessWidget {
   const RoleSelectionScreen({Key? key}) : super(key: key);
 
   void selectRole(BuildContext context, String role) {
-    // Navigate to Register Screen and pass the selected role
     Navigator.pushNamed(context, '/register', arguments: role);
   }
 

@@ -25,7 +25,7 @@ class DatabaseService {
         .orderBy('takenAt', descending: true)
         .snapshots()
         .map((snapshot) => snapshot.docs
-        .map((doc) => ResultModel.fromMap(doc.data()))
-        .toList());
+            .map((doc) => ResultModel.fromMap(doc.data()))
+            .toList());
   }
 }

@@ -9,7 +9,6 @@ import 'screens/student/student_home.dart';
 import 'screens/admin/create_exam_screen.dart';
 import 'screens/admin/exam_list_screen.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -23,6 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Your App Name',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const AuthWrapper(),

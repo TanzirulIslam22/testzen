@@ -1,5 +1,3 @@
-// File: lib/screens/student/available_exams_screen.dart
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../screens/student/exam_screen.dart';

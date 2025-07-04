@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; //refer to flutter UI toolkit
 import 'package:firebase_auth/firebase_auth.dart';
 import 'services/auth_service.dart';
 import 'screens/auth/login_screen.dart';
@@ -27,7 +27,8 @@ class _AuthWrapperState extends State<AuthWrapper> {
     _user = AuthService.currentUser;
 
     if (_user != null) {
-      final doc = await AuthService.firestore.collection('users').doc(_user!.uid).get();
+      final doc =
+          await AuthService.firestore.collection('users').doc(_user!.uid).get();
       _role = doc.data()?['role'];
     }
 
@@ -52,8 +53,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
     } else if (_role == 'student') {
       return const StudentHome();
     } else {
-      // Unknown role, fallback to login
-      return const LoginScreen();
+      return const LoginScreen(); // Unknown role, fallback to login
     }
   }
 }

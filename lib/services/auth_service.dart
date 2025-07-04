@@ -2,13 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthService {
-  static final FirebaseAuth _auth = FirebaseAuth.instance;
-  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  static final FirebaseAuth _auth =
+      FirebaseAuth.instance; //to access login/signUp
+  static final FirebaseFirestore _firestore =
+      FirebaseFirestore.instance; //to store 'role'
 
-  // Optional public getter
   static FirebaseFirestore get firestore => _firestore;
 
-  /// Register user and save role in Firestore
+  // Register user and save role in Firestore
   static Future<void> register({
     required String email,
     required String password,
@@ -45,12 +46,12 @@ class AuthService {
     final doc = await _firestore.collection('users').doc(user.uid).get();
 
     if (!doc.exists) {
-      print('❗️User doc not found for UID: ${user.uid}');
+      print(' ️User doc not found for UID: ${user.uid}');
       throw Exception('User role not found');
     }
 
     final data = doc.data();
-    print('✅ User document data: $data');
+    print(' User document data: $data');
 
     if (data == null || !data.containsKey('role')) {
       throw Exception('User role not found');
@@ -59,11 +60,10 @@ class AuthService {
     return data['role'] as String;
   }
 
-  /// Sign out user
+  /// Sign out user Method
   static Future<void> logout() async {
     await _auth.signOut();
   }
 
-  /// Get current Firebase user
   static User? get currentUser => _auth.currentUser;
 }

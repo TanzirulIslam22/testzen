@@ -31,7 +31,6 @@ class _ExamScreenState extends State<ExamScreen> {
 
   Future<void> _loadExamAndQuestions() async {
     try {
-      // Load exam details
       final examDoc = await FirebaseFirestore.instance
           .collection('exams')
           .doc(widget.examId)
@@ -42,22 +41,34 @@ class _ExamScreenState extends State<ExamScreen> {
         return;
       }
 
-      final examDateTime =
-      (examData['examDateTime'] as Timestamp?)?.toDate();
-      if (examDateTime == null || DateTime.now().isBefore(examDateTime)) {
+      final examDateTime = (examData['examDateTime'] as Timestamp?)?.toDate();
+      _examTitle = examData['title'] ?? 'Exam';
+      _durationMinutes = examData['durationMinutes'] ?? 0;
+
+      if (examDateTime == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid exam schedule.')),
+        );
+        Navigator.pop(context);
+        return;
+      }
+
+      final now = DateTime.now();
+      final endTime = examDateTime.add(Duration(minutes: _durationMinutes));
+
+      // 🟥 Block if exam already ended
+      if (now.isAfter(endTime)) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content: Text('This exam is not yet available.')),
+            const SnackBar(content: Text('Exam time is over. You cannot join now.')),
           );
         }
         Navigator.pop(context);
         return;
       }
 
-      _examTitle = examData['title'] ?? 'Exam';
-      _durationMinutes = examData['durationMinutes'] ?? 0;
-      _secondsLeft = _durationMinutes * 60;
+      // 🟦 Allow late join with reduced time
+      _secondsLeft = endTime.difference(now).inSeconds;
 
       // Load questions
       final questionsSnapshot = await FirebaseFirestore.instance

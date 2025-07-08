@@ -5,6 +5,8 @@ import '../../models/question_model.dart';
 import '../../models/result_model.dart';
 import '../../services/database_service.dart';
 import '../../services/auth_service.dart';
+import 'waiting_screen.dart';
+import 'single_exam_result_screen.dart'; // ✅ New screen for single result
 
 class ExamScreen extends StatefulWidget {
   final String examId;
@@ -22,6 +24,7 @@ class _ExamScreenState extends State<ExamScreen> {
   int _secondsLeft = 0;
   String _examTitle = '';
   int _durationMinutes = 0;
+  late DateTime _examEndTime;
 
   @override
   void initState() {
@@ -54,10 +57,9 @@ class _ExamScreenState extends State<ExamScreen> {
       }
 
       final now = DateTime.now();
-      final endTime = examDateTime.add(Duration(minutes: _durationMinutes));
+      _examEndTime = examDateTime.add(Duration(minutes: _durationMinutes));
 
-      // 🟥 Block if exam already ended
-      if (now.isAfter(endTime)) {
+      if (now.isAfter(_examEndTime)) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Exam time is over. You cannot join now.')),
@@ -67,10 +69,8 @@ class _ExamScreenState extends State<ExamScreen> {
         return;
       }
 
-      // 🟦 Allow late join with reduced time
-      _secondsLeft = endTime.difference(now).inSeconds;
+      _secondsLeft = _examEndTime.difference(now).inSeconds;
 
-      // Load questions
       final questionsSnapshot = await FirebaseFirestore.instance
           .collection('exams')
           .doc(widget.examId)
@@ -127,8 +127,8 @@ class _ExamScreenState extends State<ExamScreen> {
       }
     }
 
-    final userId = AuthService.currentUser?.uid;
-    if (userId == null) {
+    final user = AuthService.currentUser;
+    if (user == null) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('User not logged in.')),
@@ -136,16 +136,22 @@ class _ExamScreenState extends State<ExamScreen> {
       return;
     }
 
+    // Fetch userName from Firestore users collection
+    final userDoc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+    final userName = userDoc.data()?['name'] ?? user.email ?? 'Anonymous';
+
     final result = ResultModel(
       examId: widget.examId,
       examTitle: _examTitle,
       totalQuestions: _questions.length,
       correctAnswers: correct,
       takenAt: DateTime.now(),
+      userId: user.uid,       // added userId
+      userName: userName,     // added userName
     );
 
     try {
-      await DatabaseService.saveExamResult(userId: userId, result: result);
+      await DatabaseService.saveExamResult(userId: user.uid, result: result);
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -154,22 +160,22 @@ class _ExamScreenState extends State<ExamScreen> {
     }
 
     if (!mounted) return;
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text(autoSubmitted ? 'Time Up' : 'Exam Submitted'),
-        content: Text('You got $correct out of ${_questions.length} correct.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // close dialog
-              Navigator.pop(context); // go back
-            },
-            child: const Text('OK'),
-          )
-        ],
-      ),
-    );
+
+    if (DateTime.now().isBefore(_examEndTime)) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => WaitingScreen(examId: widget.examId),
+        ),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SingleExamResultScreen(examId: widget.examId),
+        ),
+      );
+    }
   }
 
   @override
@@ -226,7 +232,7 @@ class _ExamScreenState extends State<ExamScreen> {
                         });
                       },
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

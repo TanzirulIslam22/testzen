@@ -17,6 +17,11 @@ class AdminHome extends StatelessWidget {
     Navigator.pushNamed(context, '/exam_list');
   }
 
+  void _goToLeaderboardList(BuildContext context) {
+    Navigator.pushNamed(context, '/leaderboard_list');
+    // or Navigator.pushNamed(context, '/leaderboard'); if you have a single leaderboard screen
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +46,11 @@ class AdminHome extends StatelessWidget {
             ElevatedButton(
               onPressed: () => _goToExamList(context),
               child: const Text('View Exam List'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => _goToLeaderboardList(context),
+              child: const Text('View Leaderboards'),
             ),
           ],
         ),

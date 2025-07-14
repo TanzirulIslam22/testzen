@@ -8,7 +8,6 @@ import 'screens/admin/admin_home.dart';
 import 'screens/student/student_home.dart';
 import 'screens/admin/create_exam_screen.dart';
 import 'screens/admin/exam_list_screen.dart';
-import 'screens/admin/leaderboard_list_screen.dart';  // <-- new import
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +33,6 @@ class MyApp extends StatelessWidget {
         '/student_home': (context) => const StudentHome(),
         '/create_exam': (context) => const CreateExamScreen(),
         '/exam_list': (context) => const ExamListScreen(),
-        '/leaderboard_list': (context) => const LeaderboardListScreen(),  // <-- added route
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/register') {

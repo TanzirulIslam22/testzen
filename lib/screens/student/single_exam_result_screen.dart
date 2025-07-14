@@ -3,7 +3,6 @@ import '../../services/database_service.dart';
 import '../../services/auth_service.dart';
 import '../../models/result_model.dart';
 import 'package:intl/intl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SingleExamResultScreen extends StatelessWidget {
   final String examId;
@@ -23,8 +22,6 @@ class SingleExamResultScreen extends StatelessWidget {
         totalQuestions: 0,
         correctAnswers: 0,
         takenAt: DateTime.now(),
-        userId: userId,
-        userName: 'Unknown User',
       ),
     );
   }
@@ -55,15 +52,9 @@ class SingleExamResultScreen extends StatelessWidget {
             return const Center(child: Text('Result not found.'));
           }
 
-          final Timestamp? examTimestamp = examData['examDateTime'];
-          if (examTimestamp == null) {
-            return const Center(child: Text('Exam time not set.'));
-          }
-
-          final DateTime endTime = examTimestamp.toDate().add(
+          final endTime = examData['examDateTime'].toDate().add(
             Duration(minutes: examData['durationMinutes']),
           );
-
           final now = DateTime.now();
 
           if (now.isBefore(endTime)) {

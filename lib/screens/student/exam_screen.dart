@@ -127,8 +127,8 @@ class _ExamScreenState extends State<ExamScreen> {
       }
     }
 
-    final user = AuthService.currentUser;
-    if (user == null) {
+    final userId = AuthService.currentUser?.uid;
+    if (userId == null) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('User not logged in.')),
@@ -136,22 +136,16 @@ class _ExamScreenState extends State<ExamScreen> {
       return;
     }
 
-    // Fetch userName from Firestore users collection
-    final userDoc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-    final userName = userDoc.data()?['name'] ?? user.email ?? 'Anonymous';
-
     final result = ResultModel(
       examId: widget.examId,
       examTitle: _examTitle,
       totalQuestions: _questions.length,
       correctAnswers: correct,
       takenAt: DateTime.now(),
-      userId: user.uid,       // added userId
-      userName: userName,     // added userName
     );
 
     try {
-      await DatabaseService.saveExamResult(userId: user.uid, result: result);
+      await DatabaseService.saveExamResult(userId: userId, result: result);
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -161,6 +155,7 @@ class _ExamScreenState extends State<ExamScreen> {
 
     if (!mounted) return;
 
+    // 🔁 Redirect based on whether exam is over
     if (DateTime.now().isBefore(_examEndTime)) {
       Navigator.pushReplacement(
         context,
@@ -232,7 +227,7 @@ class _ExamScreenState extends State<ExamScreen> {
                         });
                       },
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

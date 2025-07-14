@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../services/database_service.dart';
 import 'add_question_screen.dart';
-import 'leaderboard_screen.dart'; // Import the leaderboard screen
 
 class ExamListScreen extends StatelessWidget {
   const ExamListScreen({Key? key}) : super(key: key);
@@ -74,21 +73,6 @@ class ExamListScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (_) => AddQuestionScreen(examId: examId),
-                          ),
-                        );
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.leaderboard, color: Colors.blue),
-                      tooltip: 'View Leaderboard',
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => LeaderboardScreen(
-                              examId: examId,
-                              examTitle: title,
-                            ),
                           ),
                         );
                       },

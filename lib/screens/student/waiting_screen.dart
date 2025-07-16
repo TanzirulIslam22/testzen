@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../services/database_service.dart';
-import 'single_exam_result_screen.dart'; // ✅ Correct import for result
+import 'single_exam_result_screen.dart';
 
 class WaitingScreen extends StatefulWidget {
   final String examId;

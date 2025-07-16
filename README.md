@@ -1,6 +1,4 @@
-Here's a comprehensive README.md file for your TestZen project with all the requested details:
 
-```markdown
 # 🧪 TestZen — Real-Time MCQ Exam App for Teachers and Students
 
 TestZen is a cross-platform mobile application built with Flutter, designed to streamline the online examination process. It offers real-time MCQ-based assessments with features such as live countdown timers, late join handling, auto-submission, and historical performance tracking — all powered by Firebase.
@@ -93,28 +91,13 @@ flutter test
 
 ---
 
-## 🙌 Contributing
-
-Contributions are highly welcome! To contribute:
-
-1. Fork this repository
-2. Create a new branch (`feature/your-feature`)
-3. Make your changes and commit
-4. Open a pull request
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
 ---
 
 ## 📫 Contact
 
 **Developer:** Tanzirul Islam  
 📧 Email: [tanzirul.islam56@gmail.com](mailto:tanzirul.islam56@gmail.com)  
-🔗 GitHub: [@yourgithub](https://github.com/yourusername)
+🔗 GitHub: [@yourgithub](https://github.com/TanzirulIslam22)
 
 ---
 

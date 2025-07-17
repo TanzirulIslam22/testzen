@@ -34,6 +34,7 @@ Once installed, open the app on your Android device. You’ll be asked to **sele
 * Enter email and password to log in or register
 <div style="display: flex; gap: 10px;">
   <img src="screenshots/login_screen.jpg" alt="Login Screen" width="150" height="350">
+  <img src="screenshots/role_selection.jpg" alt="Role Selection" width="150" height="350">
   <img src="screenshots/register_as_admin.jpg" alt="Register Screen (admin)" width="150" height="350">
   <img src="screenshots/register_as_student.jpg" alt="Register Screen (student)" width="150" height="350">
 </div>
@@ -49,7 +50,8 @@ After logging in, you'll be directed to the **Admin Dashboard** with options to:
 * Add questions
 * Review past results
 
-📷 *Insert screenshot of admin\_home.dart UI*
+<img src="screenshots/admin_home.jpg" alt="Role Selection" width="150" height="350">
+
 
 ---
 
@@ -63,7 +65,7 @@ After logging in, you'll be directed to the **Admin Dashboard** with options to:
     * Duration (in minutes)
 3. Tap **Submit**
 
-📷 *Insert screenshot from create\_exam\_screen.dart*
+<img src="screenshots/create_exam.jpg" alt="Role Selection" width="150" height="350">
 
 ---
 
@@ -77,7 +79,7 @@ After logging in, you'll be directed to the **Admin Dashboard** with options to:
     * Select the correct answer
 3. Tap **Save**
 
-📷 *Insert screenshot from add\_question\_screen.dart*
+<img src="screenshots/create_exam.jpg" alt="Role Selection" width="150" height="350">
 
 ---
 
@@ -86,17 +88,10 @@ After logging in, you'll be directed to the **Admin Dashboard** with options to:
 * View all created exams
 * Edit/delete existing ones if needed
 
-📷 *Insert screenshot from exam\_list\_screen.dart*
+<img src="screenshots/examListAndDeleteExam.jpg" alt="Role Selection" width="150" height="350">
 
 ---
 
-### 📈 6. View Results
-
-* Select a past exam to see the list of students who attempted it and their performance.
-
-📷 *Insert screenshot from result view screen (admin)*
-
----
 
 ## 👩‍🎓 Student Features
 

@@ -1,9 +1,3 @@
-Perfect! Below is a **structured User Manual template** with **step-by-step explanations** for every feature of your app, ready for you to **insert screenshots** where noted.
-
-You can copy this into a Word or Google Docs file, or I can turn it into a downloadable PDF/Markdown if you want.
-
----
-
 # 📘 TestZen User Manual
 
 **Version:** 1.0

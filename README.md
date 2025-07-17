@@ -1,66 +1,75 @@
-
 # 🧪 TestZen — Real-Time MCQ Exam App for Teachers and Students
 
-TestZen is a cross-platform mobile application built with Flutter, designed to streamline the online examination process. It offers real-time MCQ-based assessments with features such as live countdown timers, late join handling, auto-submission, and historical performance tracking — all powered by Firebase.
+TestZen is a mobile application built with **Flutter** and powered by **Firebase**, designed to simplify and automate the online examination process. It provides real-time MCQ-based exams with features like countdown timers, late join handling, auto-submission, and detailed exam history tracking — all from a single platform.
 
 ---
 
 ## ✨ Key Features
 
 ### 👨‍🏫 For Teachers (Admins)
-- Secure registration and authentication
-- Create and manage MCQ exams with 4-option questions
-- Configure exam title, date, time, and duration
-- Add/edit/delete questions per exam
-- Monitor student participation and view exam performance
-- Access and review past exams
+
+* Register and log in securely
+* Create MCQ-based exams with 4 options per question
+* Set exam title, date, time, and duration
+* Add, edit, or delete questions
+* View student participation and performance
+* Review past exam data
 
 ### 👩‍🎓 For Students
-- Secure account creation and login
-- Join exams with real-time countdown (even if late)
-- Auto-submit answers upon timer expiration
-- Review scores and correct answers post-exam
-- Access exam history and track personal progress
+
+* Sign up and log in securely
+* Register for upcoming exams
+* Join live exams with real-time timer (adjusts for late joiners)
+* Auto-submit answers when time expires
+* View results and correct answers after submission
+* Track performance history
 
 ---
 
 ## 🔧 Tech Stack
 
-- **Frontend:** Flutter (Dart)
-- **Backend & Auth:** Firebase Authentication, Cloud Firestore
-- **Architecture:** MVVM
-- **State Management:** Provider / setState
-- **Hosting:** Android, iOS (future support)
+* **Frontend:** Flutter (Dart)
+* **Backend:** Firebase (Cloud Firestore)
+* **Authentication:** Firebase Authentication
+* **Architecture:** MVVM (Model-View-ViewModel)
+* **State Management:** `Provider`, `setState`
+* **Platform:** Android only (iOS support planned)
 
 ---
 
 ## 🚀 Getting Started
 
 ### ✅ Prerequisites
-- Flutter SDK (v3.0 or above)
-- Firebase Project (configured for Android/iOS)
-- Dart SDK
-- IDE: Android Studio / VS Code
 
-### 🔨 Installation
+* Flutter SDK (v3.0 or later)
+* Dart SDK
+* Firebase Project (configured for Android)
+* IDE: Android Studio / VS Code
+
+### 🔨 Installation Steps
 
 1. **Clone the repository**
+
 ```bash
 git clone https://github.com/yourusername/testzen.git
 cd testzen
 ```
 
-2. **Install dependencies**
+2. **Install Flutter packages**
+
 ```bash
 flutter pub get
 ```
 
-3. **Set up Firebase**
-- Download `google-services.json` (Android) and place it in `/android/app`
-- Download `GoogleService-Info.plist` (iOS) and place it in `/ios/Runner`
-- Enable Email/Password Authentication in Firebase Console
+3. **Configure Firebase**
+
+* Go to your Firebase Console
+* Download `google-services.json` and place it in `android/app/`
+* Enable **Email/Password** authentication
+* Create `Cloud Firestore` database in test mode (for development)
 
 4. **Run the app**
+
 ```bash
 flutter run
 ```
@@ -71,33 +80,50 @@ flutter run
 
 ```
 lib/
-├── models/           # Data models (Exam, Question, User, Test)
+├── models/                         # Data models
+│   ├── question_model.dart         # Question model
+│   └── result_model.dart           # Result model
+│
 ├── screens/
-│   ├── admin/        # Screens for teacher functionalities
-│   ├── student/      # Screens for student functionalities
-│   └── widgets/      # Common reusable widgets
-├── service/          # Firebase auth, database, navigation services
-├── main.dart         # App entry point
-└── firebase_options.dart # Firebase config
+│   ├── admin/                      # Admin-specific screens
+│   │   ├── add_question_screen.dart
+│   │   ├── admin_home.dart
+│   │   ├── create_exam_screen.dart
+│   │   └── exam_list_screen.dart
+│   │
+│   ├── auth/                       # Authentication screens
+│   │   ├── login_screen.dart
+│   │   ├── register_screen.dart
+│   │   └── role_selection.dart
+│   │
+│   └── student/                    # Student-specific screens
+│       ├── available_exam_screen.dart
+│       ├── exam_screen.dart
+│       ├── results_screen.dart
+│       ├── single_exam_result_screen.dart
+│       ├── student_home.dart
+│       └── waiting_screen.dart
+│
+├── services/                       # App services
+│   ├── auth_service.dart
+│   ├── database_service.dart
+│   └── exam_service.dart
+│
+├── auth_wrapper.dart               # Role-based redirection logic
+├── firebase_options.dart           # Firebase config (auto-generated)
+└── main.dart                       # App entry point
+
 ```
 
 ---
 
 ## 🧪 Testing
 
+To run tests:
+
 ```bash
 flutter test
 ```
-
----
-
----
-
-## 📫 Contact
-
-**Developer:** Tanzirul Islam  
-📧 Email: [tanzirul.islam56@gmail.com](mailto:tanzirul.islam56@gmail.com)  
-🔗 GitHub: [@yourgithub](https://github.com/TanzirulIslam22)
 
 ---
 
@@ -124,14 +150,11 @@ dev_dependencies:
 
 ---
 
-## 🎨 Assets
+## 📫 Contact
 
-```yaml
-flutter:
-  assets:
-    - assets/images/
-    - assets/icons/
-    - assets/DB/Papers/
-```
+**Developer:** Tanzirul Islam
+📧 Email: [tanzirul.islam56@gmail.com](mailto:tanzirul.islam56@gmail.com)
+🔗 GitHub: [@TanzirulIslam22](https://github.com/TanzirulIslam22)
 
-N
+
+

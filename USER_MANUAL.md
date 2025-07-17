@@ -1,9 +1,9 @@
 # 📘 TestZen User Manual
 
-**Version:** 1.0
-**Platform:** Android
-**Technology Stack:** Flutter + Firebase
-**Developer:** Tanzirul Islam
+* Version: 1.0
+* Platform: Android
+* Technology Stack: Flutter + Firebase
+* Developer: Tanzirul Islam
 
 ---
 
@@ -178,6 +178,6 @@ View upcoming or ongoing exams.
 ## 📫 Support
 
 **Developer:** Tanzirul Islam(2203054_RUET_CSE_22Series)
-📧 Email: [tanzirul.islam56@gmail.com](mailto:tanzirul.islam56@gmail.com)
-🔗 GitHub: [TanzirulIslam22](https://github.com/TanzirulIslam22)
+* 📧 Email: [tanzirul.islam56@gmail.com](mailto:tanzirul.islam56@gmail.com)
+* 🔗 GitHub: [TanzirulIslam22](https://github.com/TanzirulIslam22)
 

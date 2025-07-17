@@ -34,7 +34,7 @@ Once installed, open the app on your Android device. You’ll be asked to **sele
 * Enter email and password to log in or register
 
 📷 *Insert screenshot here of admin login/register*
-
+![Login Screen](screenshots/login_screen.jpg)
 ---
 
 ### 🏠 2. Admin Home

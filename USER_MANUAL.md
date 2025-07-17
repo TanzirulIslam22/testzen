@@ -186,4 +186,3 @@ View upcoming or ongoing exams.
 * This is the first version; future updates will include iOS support and UI improvements.
 * For any issues or bugs, please contact the developer via email or GitHub.
 
-

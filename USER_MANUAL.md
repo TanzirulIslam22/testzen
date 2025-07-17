@@ -32,10 +32,12 @@ Once installed, open the app on your Android device. You’ll be asked to **sele
 
 * Choose **Admin**
 * Enter email and password to log in or register
+<div style="display: flex; gap: 10px;">
+  <img src="screenshots/login_screen.jpg" alt="Login Screen" width="150" height="350">
+  <img src="screenshots/register_as_admin.jpg" alt="Register Screen (admin)" width="150" height="350">
+  <img src="screenshots/register_as_student.jpg" alt="Register Screen (student)" width="150" height="350">
+</div>
 
-<img src="screenshots/login_screen.jpg" alt="Login Screen" width="150" height="350">
-<img src="screenshots/register_as_admin.jpg" alt="Register Screen (admin)" width="150" height="350">
-<img src="screenshots/register_as_student.jpg" alt="Register Screen (student)" width="150" height="350">
 ---
 
 ### 🏠 2. Admin Home

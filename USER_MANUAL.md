@@ -22,7 +22,7 @@ Once installed, open the app on your Android device. You’ll be asked to **sele
 * 👨‍🏫 **Admin (Teacher)**
 * 👩‍🎓 **Student**
 
-<img src="screenshots/role_selection.jpg" alt="Role Selection" width="300" height="700">
+<img src="screenshots/role_selection.jpg" alt="Role Selection" width="200" height="500">
 
 ---
 

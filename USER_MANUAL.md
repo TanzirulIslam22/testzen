@@ -34,8 +34,7 @@ Once installed, open the app on your Android device. You’ll be asked to **sele
 * Enter email and password to log in or register
 <div style="display: flex; gap: 10px;">
   <img src="screenshots/login_screen.jpg" alt="Login Screen" width="150" height="350">
-  <img src="screenshots/role_selection.jpg" alt="Role Selection" width="150" height="350">
-  <img src="screenshots/register_as_admin.jpg" alt="Register Screen (admin)" width="150" height="350">
+    <img src="screenshots/register_as_admin.jpg" alt="Register Screen (admin)" width="150" height="350">
   <img src="screenshots/register_as_student.jpg" alt="Register Screen (student)" width="150" height="350">
 </div>
 
@@ -88,7 +87,12 @@ After logging in, you'll be directed to the **Admin Dashboard** with options to:
 * View all created exams
 * Edit/delete existing ones if needed
 
+
+<div style="display: flex; gap: 10px;">
 <img src="screenshots/examListAndDeleteExam.jpg" alt="Role Selection" width="150" height="350">
+<img src="screenshots/deleteExam.jpg" alt="Role Selection" width="150" height="350">
+</div>
+
 
 ---
 
@@ -100,7 +104,10 @@ After logging in, you'll be directed to the **Admin Dashboard** with options to:
 * Choose **Student**
 * Enter email and password to log in or register
 
-📷 *Insert screenshot from login\_screen.dart / register\_screen.dart*
+<div style="display: flex; gap: 10px;">
+  <img src="screenshots/login_screen.jpg" alt="Login Screen" width="150" height="350">
+  <img src="screenshots/register_as_student.jpg" alt="Register Screen (student)" width="150" height="350">
+</div>
 
 ---
 
@@ -108,7 +115,7 @@ After logging in, you'll be directed to the **Admin Dashboard** with options to:
 
 View upcoming or ongoing exams.
 
-📷 *Insert screenshot from student\_home.dart*
+<img src="screenshots/student_home.jpg" alt="Register Screen (student)" width="150" height="350">
 
 ---
 
@@ -117,36 +124,39 @@ View upcoming or ongoing exams.
 * See a list of all available exams
 * Tap on **"Register"** for upcoming ones
 
-📷 *Insert screenshot from available\_exam\_screen.dart*
+ <img src="screenshots/availableOrUpcomingExams.jpg" alt="Register Screen (student)" width="150" height="350">
 
 ---
 
-### ⏳ 4. Waiting Room
 
-* Once registered, you’ll be placed in a waiting screen until the exam begins
-
-📷 *Insert screenshot from waiting\_screen.dart*
-
----
-
-### 🧪 5. Exam Screen
+### 🧪 4. Exam Screen
 
 * Answer each MCQ
 * Countdown timer is visible
 * If you join late, time is adjusted automatically
 * Tap **Submit** (or it will auto-submit when time ends)
 
-📷 *Insert screenshot from exam\_screen.dart*
+<img src="screenshots/exam_screen.jpg" alt="Register Screen (student)" width="150" height="350">
 
 ---
 
+### ⏳ 5. Waiting Room for Result
+
+* Once submitted, result will show-up after the total time of the exam.
+
+<img src="screenshots/waiting_screen.jpg" alt="Register Screen (student)" width="150" height="350">
+
+---
 ### 🧾 6. View Results
 
 * Go to **Results** tab
-* View score, correct answers, and personal progress
+* View scores 
+* can also access to the previous exam results
 
-📷 *Insert screenshot from results\_screen.dart*
-📷 *Insert screenshot from single\_exam\_result\_screen.dart*
+<div style="display: flex; gap: 10px;">
+  <img src="screenshots/score_screen.jpg" alt="Register Screen (student)" width="150" height="350">
+  <img src="screenshots/previous_result_history.jpg" alt="Register Screen (student)" width="150" height="350">
+</div>
 
 ---
 
@@ -167,14 +177,7 @@ View upcoming or ongoing exams.
 
 ## 📫 Support
 
-**Developer:** Tanzirul Islam
+**Developer:** Tanzirul Islam(2203054_RUET_CSE_22Series)
 📧 Email: [tanzirul.islam56@gmail.com](mailto:tanzirul.islam56@gmail.com)
 🔗 GitHub: [TanzirulIslam22](https://github.com/TanzirulIslam22)
-
----
-
-### 🔧 Notes:
-
-* This is the first version; future updates will include iOS support and UI improvements.
-* For any issues or bugs, please contact the developer via email or GitHub.
 

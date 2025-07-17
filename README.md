@@ -152,7 +152,7 @@ dev_dependencies:
 
 ## 📫 Contact
 
-**Developer:** Tanzirul Islam
+**Developer:** Tanzirul Islam(2203054_RUET_CSE_22Series)
 📧 Email: [tanzirul.islam56@gmail.com](mailto:tanzirul.islam56@gmail.com)
 🔗 GitHub: [@TanzirulIslam22](https://github.com/TanzirulIslam22)
 

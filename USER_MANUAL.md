@@ -22,7 +22,7 @@ Once installed, open the app on your Android device. You’ll be asked to **sele
 * 👨‍🏫 **Admin (Teacher)**
 * 👩‍🎓 **Student**
 
-<img src="screenshots/role_selection.jpg" alt="Role Selection" width="200" height="500">
+<img src="screenshots/role_selection.jpg" alt="Role Selection" width="150" height="350">
 
 ---
 
@@ -33,17 +33,9 @@ Once installed, open the app on your Android device. You’ll be asked to **sele
 * Choose **Admin**
 * Enter email and password to log in or register
 
-[//]: # (![Role Selection]&#40;screenshots/role_selection.jpg&#41;)
-
-[//]: # (![Login Screen]&#40;screenshots/login_screen.jpg&#41;)
-
-[//]: # (![Register Screen&#40;admin&#41;]&#40;screenshots/Resigster_as_admin.jpg&#41;)
-
-[//]: # (![Register Screen&#40;student&#41;]&#40;screenshots/Resigster_as_student.jpg&#41;)
-
-<img src="screenshots/login_screen.jpg" alt="Login Screen" width="400">
-<img src="screenshots/register_as_admin.jpg" alt="Register Screen (admin)" width="400">
-<img src="screenshots/register_as_student.jpg" alt="Register Screen (student)" width="400">
+<img src="screenshots/login_screen.jpg" alt="Login Screen" width="150" height="350">
+<img src="screenshots/register_as_admin.jpg" alt="Register Screen (admin)" width="150" height="350">
+<img src="screenshots/register_as_student.jpg" alt="Register Screen (student)" width="150" height="350">
 ---
 
 ### 🏠 2. Admin Home

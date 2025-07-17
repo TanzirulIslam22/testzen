@@ -22,7 +22,7 @@ Once installed, open the app on your Android device. You’ll be asked to **sele
 * 👨‍🏫 **Admin (Teacher)**
 * 👩‍🎓 **Student**
 
-📷 *Insert screenshot here of role selection screen*
+<img src="screenshots/role_selection.jpg" alt="Role Selection" width="300" height="700">
 
 ---
 
@@ -40,7 +40,7 @@ Once installed, open the app on your Android device. You’ll be asked to **sele
 [//]: # (![Register Screen&#40;admin&#41;]&#40;screenshots/Resigster_as_admin.jpg&#41;)
 
 [//]: # (![Register Screen&#40;student&#41;]&#40;screenshots/Resigster_as_student.jpg&#41;)
-<img src="screenshots/role_selection.jpg" alt="Role Selection" width="400">
+
 <img src="screenshots/login_screen.jpg" alt="Login Screen" width="400">
 <img src="screenshots/register_as_admin.jpg" alt="Register Screen (admin)" width="400">
 <img src="screenshots/register_as_student.jpg" alt="Register Screen (student)" width="400">

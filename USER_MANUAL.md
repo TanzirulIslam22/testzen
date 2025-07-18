@@ -113,7 +113,7 @@ After logging in, you'll be directed to the **Admin Dashboard** with options to:
 ### 🏠 2. Student Home
 
 * View available exams
-* View previous result
+* See the list of previous results
 
 <img src="screenshots/student_home.jpg" alt="Register Screen (student)" width="150" height="350">
 

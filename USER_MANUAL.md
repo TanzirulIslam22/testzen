@@ -35,7 +35,6 @@ Once installed, open the app on your Android device. You’ll be asked to **sele
 <div style="display: flex; gap: 10px;">
   <img src="screenshots/login_screen.jpg" alt="Login Screen" width="150" height="350">
     <img src="screenshots/register_as_admin.jpg" alt="Register Screen (admin)" width="150" height="350">
-  <img src="screenshots/register_as_student.jpg" alt="Register Screen (student)" width="150" height="350">
 </div>
 
 ---
@@ -78,7 +77,7 @@ After logging in, you'll be directed to the **Admin Dashboard** with options to:
     * Select the correct answer
 3. Tap **Save**
 
-<img src="screenshots/create_exam.jpg" alt="Role Selection" width="150" height="350">
+<img src="screenshots/question_creation.jpg" alt="Role Selection" width="150" height="350">
 
 ---
 
@@ -113,7 +112,8 @@ After logging in, you'll be directed to the **Admin Dashboard** with options to:
 
 ### 🏠 2. Student Home
 
-View upcoming or ongoing exams.
+* View available exams
+* View previous result
 
 <img src="screenshots/student_home.jpg" alt="Register Screen (student)" width="150" height="350">
 
@@ -122,7 +122,6 @@ View upcoming or ongoing exams.
 ### 📅 3. Available Exams
 
 * See a list of all available exams
-* Tap on **"Register"** for upcoming ones
 
  <img src="screenshots/availableOrUpcomingExams.jpg" alt="Register Screen (student)" width="150" height="350">
 
@@ -140,9 +139,9 @@ View upcoming or ongoing exams.
 
 ---
 
-### ⏳ 5. Waiting Room for Result
+### ⏳ 5. Waiting Screen for Result
 
-* Once submitted, result will show-up after the total time of the exam.
+* Once submitted, the result will be displayed after the exam ends.
 
 <img src="screenshots/waiting_screen.jpg" alt="Register Screen (student)" width="150" height="350">
 
@@ -151,7 +150,7 @@ View upcoming or ongoing exams.
 
 * Go to **Results** tab
 * View scores 
-* can also access to the previous exam results
+* Access to the previous exam results
 
 <div style="display: flex; gap: 10px;">
   <img src="screenshots/score_screen.jpg" alt="Register Screen (student)" width="150" height="350">
@@ -177,7 +176,7 @@ View upcoming or ongoing exams.
 
 ## 📫 Support
 
-**Developer:** Tanzirul Islam(2203054_RUET_CSE_22Series)
+**Developer:** Tanzirul Islam (ID: 2203054_RUET_CSE_22Series)
 * 📧 Email: [tanzirul.islam56@gmail.com](mailto:tanzirul.islam56@gmail.com)
 * 🔗 GitHub: [TanzirulIslam22](https://github.com/TanzirulIslam22)
 

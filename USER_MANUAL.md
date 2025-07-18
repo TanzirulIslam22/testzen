@@ -3,7 +3,9 @@
 * Version: 1.0
 * Platform: Android
 * Technology Stack: Flutter + Firebase
-* Developer: Tanzirul Islam
+* Developer: Tanzirul Islam (ID: 2203054, 22 Series, Dept. of CSE, RUET)
+* Project Supervisor: Nahin Ul Sadad, Assistant Professor, Dept. of CSE, RUET
+
 
 ---
 
@@ -176,7 +178,7 @@ After logging in, you'll be directed to the **Admin Dashboard** with options to:
 
 ## 📫 Support
 
-**Developer:** Tanzirul Islam (ID: 2203054_RUET_CSE_22Series)
+**Developer:** Tanzirul Islam (ID: 2203054, 22 Series, Dept. of CSE, RUET)
 * 📧 Email: [tanzirul.islam56@gmail.com](mailto:tanzirul.islam56@gmail.com)
 * 🔗 GitHub: [TanzirulIslam22](https://github.com/TanzirulIslam22)
 

@@ -51,7 +51,7 @@ TestZen is a mobile application built with **Flutter** and powered by **Firebase
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/testzen.git
+git clone https://github.com/TanzirulIslam22/testzen
 cd testzen
 ```
 
